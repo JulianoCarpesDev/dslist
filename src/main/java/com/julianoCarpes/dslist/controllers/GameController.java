@@ -15,17 +15,23 @@ import com.julianoCarpes.dslist.dto.GameMinDTO;
 import com.julianoCarpes.dslist.entities.Game;
 import com.julianoCarpes.dslist.services.GameListService;
 import com.julianoCarpes.dslist.services.GameService;
-
 @RestController
-@RequestMapping(value = "/lists")
+@RequestMapping(value = "/games")
 public class GameController {
+
 	@Autowired
-	private GameListService gameListService;
-	@GetMapping
-	public List<GameListDTO> findAll() {
-		List<GameListDTO> result = gameListService.findAll();
+	private GameService gameService;	
+
+	@GetMapping(value = "/{id}")
+	public GameMaxDTO findById(@PathVariable Long id) {
+		GameMaxDTO result = gameService.findById(id);
 		return result;
 	}
-	
-	
+
+	@GetMapping
+	public List<GameMinDTO> findAll() {
+		List<GameMinDTO> result = gameService.findAll();
+		return result;
+	}
 }
+
