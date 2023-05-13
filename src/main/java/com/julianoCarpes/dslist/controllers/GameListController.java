@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.julianoCarpes.dslist.dto.GameListDTO;
 import com.julianoCarpes.dslist.dto.GameMaxDTO;
 import com.julianoCarpes.dslist.dto.GameMinDTO;
+import com.julianoCarpes.dslist.dto.ReplacementDTO;
 import com.julianoCarpes.dslist.entities.Game;
 import com.julianoCarpes.dslist.services.GameListService;
 import com.julianoCarpes.dslist.services.GameService;
@@ -36,5 +39,9 @@ public class GameListController {
 	public List<GameMinDTO> findGames(@PathVariable Long listId) {
 		List<GameMinDTO> result = gameService.findByGameList(listId);
 		return result;
+	}
+	@PostMapping(value = "/{listId}/replacement")
+	public void move (@PathVariable Long listId, @RequestBody ReplacementDTO body) {
+		gameListService.move(listId, body.getSourceIndex(), body.getDestinationIndex());
 	}
 }
